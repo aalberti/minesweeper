@@ -25,7 +25,7 @@ private fun List<List<Char>>.bottom(i: Int): List<Char> = if (i == size - 1) Lis
 private fun List<Char>.left(j: Int) = if (j == 0) '.' else this[j - 1]
 private fun List<Char>.right(j: Int) = if (j == size - 1) '.' else this[j + 1]
 
-fun String.play(x: Int, y: Int): Outcome = if (toGrid()[x][y] == '*') Kaboom() else SomethingElse()
+fun String.play(x: Int, y: Int): Outcome = if (toGrid()[x][y] == '*') Kaboom() else Win()
 sealed class Outcome
 class Kaboom : Outcome()
-class SomethingElse : Outcome()
+class Win : Outcome()

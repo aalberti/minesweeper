@@ -19,4 +19,7 @@ class MinesTest : StringSpec({
     "loose" {
         "*".play(0, 0) should beInstanceOf(Kaboom::class)
     }
+    "win" {
+        "0".play(0, 0) should beInstanceOf(Win::class)
+    }
 })
