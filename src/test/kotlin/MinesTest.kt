@@ -1,6 +1,4 @@
 import io.kotlintest.matchers.shouldBe
-import io.kotlintest.matchers.beInstanceOf
-import io.kotlintest.matchers.should
 import io.kotlintest.specs.StringSpec
 
 class MinesTest : StringSpec({
@@ -17,9 +15,14 @@ class MinesTest : StringSpec({
     }
 
     "loose" {
-        "*".play(0, 0) should beInstanceOf(Kaboom::class)
+        Board("*", "?").play(0, 0) shouldBe Kaboom()
     }
     "win" {
-        "0".play(0, 0) should beInstanceOf(Win::class)
+        Board("0", "?").play(0, 0) shouldBe Win()
     }
+    "go on" {
+        Board("1*1", "???").play(0, 0) shouldBe GoOn(Board("1*1", "1??")) 
+    }
+    //TODO multi-cell win
+    //TODO multiline go on
 })
