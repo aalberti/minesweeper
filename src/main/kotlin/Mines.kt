@@ -25,18 +25,23 @@ private fun List<List<Char>>.bottom(i: Int): List<Char> = if (i == size - 1) Lis
 private fun List<Char>.left(j: Int) = if (j == 0) '.' else this[j - 1]
 private fun List<Char>.right(j: Int) = if (j == size - 1) '.' else this[j + 1]
 
-data class Board(val counts: String, val display: String) {
+data class Board(val mines: String, val display: String) {
     fun play(x: Int, y: Int) = when {
         isAMine(x, y) -> Kaboom()
         won(x, y) -> Win()
-        else -> GoOn(Board(counts, newDisplay(x, y)))
+        else -> GoOn(Board(mines, newDisplay(x, y)))
     }
-    private fun isAMine(x: Int, y: Int) = counts.toGrid()[x][y] == '*'
-    private fun won(x: Int, y: Int) = newDisplay(x, y).count { it == '?' } == 0
+    private fun isAMine(x: Int, y: Int) = mines.toGrid()[x][y] == '*'
+    private fun won(x: Int, y: Int): Boolean {
+        val newDisplay = newDisplay(x, y)
+        return isSolved(newDisplay) && allMinesAreMarked(newDisplay)
+    }
+    private fun isSolved(newDisplay: String) = newDisplay.count { it == '?' } == 0
+    private fun allMinesAreMarked(newDisplay: String) = newDisplay.count { it == '!' } == mines.count { it == '*' }
     private fun newDisplay(x: Int, y: Int): String = display.lines()
-            .mapIndexed { i, s ->
-                if (i == x) s.replaceRange(y..y, "${counts[y]}")
-                else s
+            .mapIndexed { i, line ->
+                if (i == x) line.replaceRange(y..y, "${mines[y]}")
+                else line
             }
             .joinToString("\n")
 }

@@ -44,5 +44,7 @@ class MinesTest : StringSpec({
                 """.trimMargin())
         )
     }
-    //TODO multi-cell win
+    "win when mines marked" {
+        Board("1*", "?!").play(0, 0) shouldBe Win()
+    }
 })
