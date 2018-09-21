@@ -29,7 +29,16 @@ data class Board(val counts: String, val display: String) {
     fun play(x: Int, y: Int) = when {
         counts.toGrid()[x][y] == '*' -> Kaboom()
         counts.length == 1 -> Win()
-        else -> GoOn(Board(counts, display.replaceRange(y..y, "${counts[y]}")))
+        else -> GoOn(Board(counts, newDisplay(x, y)))
+    }
+
+    private fun newDisplay(x:Int, y: Int): String {
+        return display.lines()
+                .mapIndexed {i, s -> 
+                    if (i == x) s.replaceRange(y..y, "${counts[y]}") 
+                    else s
+                }
+                .joinToString("\n")
     }
 }
 

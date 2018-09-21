@@ -20,9 +20,26 @@ class MinesTest : StringSpec({
     "win" {
         Board("0", "?").play(0, 0) shouldBe Win()
     }
-    "go on" {
-        Board("1*1", "???").play(0, 0) shouldBe GoOn(Board("1*1", "1??")) 
+    "mono-line go on" {
+        Board("1*1", "???").play(0, 0) shouldBe GoOn(Board("1*1", "1??"))
+    }
+    "multi-line go on" {
+        val hiddenBoard = """
+                    |111
+                    |1*1
+                """.trimMargin()
+        Board(
+                hiddenBoard,
+                """
+                    |???
+                    |???
+                """.trimMargin()
+        ).play(1, 0) shouldBe GoOn(Board(
+                hiddenBoard, """
+                    |???
+                    |1??
+                """.trimMargin())
+        )
     }
     //TODO multi-cell win
-    //TODO multiline go on
 })
