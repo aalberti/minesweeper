@@ -27,19 +27,18 @@ private fun List<Char>.right(j: Int) = if (j == size - 1) '.' else this[j + 1]
 
 data class Board(val counts: String, val display: String) {
     fun play(x: Int, y: Int) = when {
-        counts.toGrid()[x][y] == '*' -> Kaboom()
-        counts.length == 1 -> Win()
+        isAMine(x, y) -> Kaboom()
+        won(x, y) -> Win()
         else -> GoOn(Board(counts, newDisplay(x, y)))
     }
-
-    private fun newDisplay(x:Int, y: Int): String {
-        return display.lines()
-                .mapIndexed {i, s -> 
-                    if (i == x) s.replaceRange(y..y, "${counts[y]}") 
-                    else s
-                }
-                .joinToString("\n")
-    }
+    private fun isAMine(x: Int, y: Int) = counts.toGrid()[x][y] == '*'
+    private fun won(x: Int, y: Int) = newDisplay(x, y).count { it == '?' } == 0
+    private fun newDisplay(x: Int, y: Int): String = display.lines()
+            .mapIndexed { i, s ->
+                if (i == x) s.replaceRange(y..y, "${counts[y]}")
+                else s
+            }
+            .joinToString("\n")
 }
 
 sealed class Outcome
