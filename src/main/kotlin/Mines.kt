@@ -4,7 +4,7 @@ fun count(mines: String): String {
         Array(minesGrid[0].size) { j ->
             if (minesGrid[i][j] == '*') '*'
             else minesGrid
-                    .neighbours(i, j)
+                    .neighbourhood(i, j)
                     .count { it == '*' }
                     .toString()[0]
         }
@@ -14,7 +14,7 @@ fun count(mines: String): String {
 
 private fun String.toGrid(): List<List<Char>> = lines().map { it.toList() }
 
-private fun List<List<Char>>.neighbours(i: Int, j: Int): String = """
+private fun List<List<Char>>.neighbourhood(i: Int, j: Int): String = """
         |${top(i).left(j)}${top(i)[j]}${top(i).right(j)}
         |${this[i].left(j)}${this[i][j]}${this[i].right(j)}
         |${bottom(i).left(j)}${bottom(i)[j]}${bottom(i).right(j)}
