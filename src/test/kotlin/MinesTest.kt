@@ -15,13 +15,13 @@ class MinesTest : StringSpec({
     }
 
     "loose" {
-        Board("*", "?").play(0, 0) shouldBe Kaboom()
+        Board("*", "?").play(0, 0) shouldBe Kaboom
     }
     "win" {
-        Board("0", "?").play(0, 0) shouldBe Win()
+        Board("0", "?").play(0, 0) shouldBe Win
     }
     "multi-cell win with no mine" {
-        Board("00", "?0").play(0, 0) shouldBe Win()
+        Board("00", "?0").play(0, 0) shouldBe Win
     }
     "mono-line go on" {
         Board("1*1", "???").play(0, 0) shouldBe GoOn(Board("1*1", "1??"))
@@ -45,6 +45,6 @@ class MinesTest : StringSpec({
         )
     }
     "win when mines marked" {
-        Board("1*", "?!").play(0, 0) shouldBe Win()
+        Board("1*", "?!").play(0, 0) shouldBe Win
     }
 })

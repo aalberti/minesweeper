@@ -27,8 +27,8 @@ private fun List<Char>.right(j: Int) = if (j == size - 1) '.' else this[j + 1]
 
 data class Board(val mines: String, val display: String) {
     fun play(x: Int, y: Int) = when {
-        isAMine(x, y) -> Kaboom()
-        won(x, y) -> Win()
+        isAMine(x, y) -> Kaboom
+        won(x, y) -> Win
         else -> GoOn(Board(mines, newDisplay(x, y)))
     }
     private fun isAMine(x: Int, y: Int) = mines.toGrid()[x][y] == '*'
@@ -47,6 +47,6 @@ data class Board(val mines: String, val display: String) {
 }
 
 sealed class Outcome
-data class Kaboom(val cause: String? = null) : Outcome()
-data class Win(val msg: String? = null) : Outcome()
+object Kaboom : Outcome()
+object Win : Outcome()
 data class GoOn(val newBoard: Board) : Outcome()
